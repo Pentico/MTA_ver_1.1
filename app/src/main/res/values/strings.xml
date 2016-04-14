@@ -7,6 +7,7 @@
 
     <string name="menu_main_scanning_ok">Scanning Ok</string>
     <string name="menu_main_scanning_not_ok">Scanning error</string>
+    <string name="title_activity_play">Play</string>
 
     <!--End of Music Scan -->
 

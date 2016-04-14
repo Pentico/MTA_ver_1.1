@@ -12,4 +12,5 @@ import com.pencorp.mta_ver_11.Activities.General.CoreActivity;
  *
  */
 public class ActivityMusicPlay extends CoreActivity {
+
 }

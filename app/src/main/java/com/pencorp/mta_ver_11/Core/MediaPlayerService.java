@@ -452,7 +452,8 @@ public class MediaPlayerService extends Service
     /**
      * Defines the interaction between an Activity and this Service
      */
-    private class MusicBinder extends Binder {
+    public class MusicBinder extends Binder {
+
         public MediaPlayerService getService(){
             return MediaPlayerService.this;
         }
@@ -685,6 +686,27 @@ public class MediaPlayerService extends Service
         stopSelf();
         currentSong = null;
     }
+
+    /**
+     * Returns the song on the Now Playing List at `position`.
+     */
+    public Song getSong(int position) {
+        return songs.get(position);
+    }
+
+    /**
+     * Sets a specific song, already within internal Now Playing List.
+     *
+     * @param songIndex Index of the song inside the Now Playing List.
+     */
+    public void setSong(int songIndex) {
+
+        if (songIndex < 0 || songIndex >= songs.size())
+            currentSongPosition = 0;
+        else
+            currentSongPosition = songIndex;
+    }
+
 
 
 }

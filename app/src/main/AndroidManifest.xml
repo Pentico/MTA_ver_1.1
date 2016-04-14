@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pencorp.mta_ver_11">
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Debuging_Tol.Play"
+            android:label="@string/title_activity_play"
+            android:parentActivityName=".Activities.General.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pencorp.mta_ver_11.Activities.General.MainActivity" />
+        </activity>
+
+        <!-- Services (run on the background) -->
+        <service android:name=".Core.MediaPlayerService"/>
+
+
     </application>
 
 </manifest>
