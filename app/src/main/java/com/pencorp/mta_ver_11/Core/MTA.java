@@ -27,7 +27,7 @@ public class MTA {
      * This list will be edited alot during this applications lifetime
      *
      */
-   public static ArrayList<Song> songs = null;
+   public static ArrayList<Song> songs ;
 
     /**
      * All the songs on the device

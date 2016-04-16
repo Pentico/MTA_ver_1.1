@@ -18,7 +18,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.pencorp.mta_ver_11.Scanning_Songs.Song;
-
+import com.pencorp.mta_ver_11.Scanning_Songs.SongList;
 
 
 /**
@@ -44,7 +44,7 @@ public class MediaPlayerService extends Service
     /**
      * List of song we're currently playing
      */
-    private ArrayList<Song> songs;
+    private static ArrayList<Song> songs = MTA.nowPlayingList;
 
     /**
      * Copy of the Current song being played (paused)
@@ -53,10 +53,12 @@ public class MediaPlayerService extends Service
      */
     public Song currentSong = null;
 
+    public Song songToPlay;
+
     /**
      * Index of the current song we're playing on the songs list
      */
-    public int currentSongPosition;
+    public int currentSongPosition=0;
 
     /**
      * Possible states this Service can be on
@@ -163,6 +165,7 @@ public class MediaPlayerService extends Service
     public void onCreate() {
         super.onCreate();
 
+        songs = MTA.nowPlayingList;
         //reset the songs list
         currentSongPosition = 0;
 
@@ -578,19 +581,29 @@ public class MediaPlayerService extends Service
      */
     public void playSong() {
 
+        Log.w("tag", "reset media");
         mediaPlayer.reset();
 
         // Get the song ID from the list, extract the ID and
         // get an URL based on it
-        Song songToPlay = songs.get(currentSongPosition);
+        Log.w("tag", "getting song _ID " + songs.size() );
 
+        SongList songList = new SongList();
+        songList.scanSongs(MediaPlayerService.this,"internl");
+        MTA.songs = songList.songs;
+         songToPlay = MTA.songs.get(currentSongPosition);
+
+        Log.w("tag", "getting song _ID " + MTA.songs.size() );
+
+        Log.w("tag", "current song -assignment");
         currentSong = songToPlay;
 
+        Log.w("tag", "appending external URI");
         // Append the external URI with our songs'
         Uri songToPlayURI = ContentUris.withAppendedId
                 (android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                         songToPlay.getId()); //No internal ???? clever near ...lol (not funny )
-
+        Log.w("tag", "_after");
         try {
             mediaPlayer.setDataSource(getApplicationContext(), songToPlayURI);
         }
@@ -602,6 +615,7 @@ public class MediaPlayerService extends Service
             Log.e(TAG, "Error when changing the song", e);
             destroySelf();
         }
+        Log.w("tag", "prepare music asynchroo");
 
         // Prepare the MusicPlayer asynchronously.
         // When finished, will call `onPrepare`

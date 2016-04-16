@@ -13,29 +13,33 @@
     tools:showIn="@layout/activity_play">
 
     <ListView
-        android:id="@id/list_view"
+        android:id="@+id/listview1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="90dp"
         android:fastScrollEnabled="true"
-        ></ListView>
+        />
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar" />
+        android:id="@+id/seekBar"
+        android:layout_below="@id/listview1"
+        />
 
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_below="@id/list_view">
+        android:layout_below="@id/seekBar">
 
         <ImageButton
             android:id="@+id/activity_now_playing_skip_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/skip"
+            android:onClick="playPrevious"
             />
 
         <ImageButton
@@ -48,7 +52,8 @@
             android:id="@+id/activity_now_playing_skip_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/skip" />
+            android:src="@drawable/skip"
+            android:onClick="playNext"/>
 
     </LinearLayout>
 
