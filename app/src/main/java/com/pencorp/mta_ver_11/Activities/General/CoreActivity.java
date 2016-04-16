@@ -24,6 +24,7 @@ public class CoreActivity extends AppCompatActivity {
         Log.w("tag", "starting service");
 
         MTA.startMusicService(this);
+
     }
 
 }
