@@ -58,6 +58,7 @@ public class Play extends CoreActivity  implements
 
         Log.w("tag", "here");
         songListView = (ListView) findViewById(R.id.listview1);
+        songListView.setOnItemClickListener(this);
 
         Log.w("tag","after songListview");
 
@@ -86,6 +87,7 @@ public class Play extends CoreActivity  implements
         // Scroll the list view to the current song.
         songListView.setSelection(MTA.musicService.currentSongPosition);
 
+
         Log.w("tag", "current_after_setMusicController");
         setMusicController();
 
@@ -112,9 +114,26 @@ public class Play extends CoreActivity  implements
 
 
 
+    //when the user clicks  the list of songs
+    //when start playing the songs immedialtly
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        //Prepare the music service to play the song.
+        MTA.musicService.setSong(position); //TODO : where is position getting the id
+
+        //Scroll the list view to the current song.
+        songListView.setSelection(position);
+
+        MTA.musicService.playSong();
+
+        //TODO : Error the boolean doesn't work well
+        if(playbackPaused){
+
+            setMusicController();
+            playbackPaused = false;
+        }
+        setMusicController();
     }
 
     @Override
@@ -135,7 +154,7 @@ public class Play extends CoreActivity  implements
             public void onClick(View v) {
 
                 //Calling method defined on  Play.c
-               // playNext();
+                playNext();
 
             }
         }, new View.OnClickListener() {
@@ -150,14 +169,15 @@ public class Play extends CoreActivity  implements
 
         //Binding to our media player
         musicController.setMediaPlayer(this);
-        musicController.setAnchorView(findViewById(R.id.list_view));
+        musicController.setAnchorView(findViewById(R.id.list_view)); //what is list_view ? ??
         musicController.setEnabled(true);
     }
 
     /**
      * Jumps to the next song and starts playing it right now.
      */
-    public void playNext( View view) {
+    public void playNext( ) {
+
         Log.w("tag", "play next");
         MTA.musicService.next(true);
         MTA.musicService.playSong();
@@ -170,7 +190,7 @@ public class Play extends CoreActivity  implements
         }
         Log.w("tag", "music Controller show");
 
-        musicController.show();
+        musicController.show(0);
         Log.w("tag", "music Controller show end");
     }
 
@@ -190,7 +210,8 @@ public class Play extends CoreActivity  implements
             playbackPaused = false;
         }
 
-        musicController.show();
+        //adding an int to try and figure out why it does this .....
+        musicController.show(0);
     }
 
     @Override

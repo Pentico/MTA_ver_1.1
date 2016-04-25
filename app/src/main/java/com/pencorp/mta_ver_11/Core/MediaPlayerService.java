@@ -497,8 +497,10 @@ public class MediaPlayerService extends Service
      *       actually play the music.
      */
     public void previous(boolean userSkippedSong) {
-        if (serviceState != ServiceState.Paused && serviceState != ServiceState.Playing)
-            return;
+//        if (serviceState != ServiceState.Paused && serviceState != ServiceState.Playing)
+//            return;
+
+        //Commented the line to check if it can work
 
         if (userSkippedSong) {
 
@@ -588,9 +590,11 @@ public class MediaPlayerService extends Service
         // get an URL based on it
         Log.w("tag", "getting song _ID " + songs.size() );
 
+        //scanning songs
         SongList songList = new SongList();
         songList.scanSongs(MediaPlayerService.this,"internl");
         MTA.songs = songList.songs;
+
          songToPlay = MTA.songs.get(currentSongPosition);
 
         Log.w("tag", "getting song _ID " + MTA.songs.size() );
@@ -641,8 +645,9 @@ public class MediaPlayerService extends Service
     }
 
     public void unpausePlayer() {
-        if (serviceState != ServiceState.Paused && serviceState != ServiceState.Playing)
-            return;
+
+//        if (serviceState != ServiceState.Paused && serviceState != ServiceState.Playing)
+//            return;
 
         mediaPlayer.start();
         serviceState = ServiceState.Playing;
